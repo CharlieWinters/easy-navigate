@@ -24,8 +24,9 @@ export default defineConfig({
       input: allHtmlEntries,
     },
   },
+  base: '/easy-navigate/',
   plugins: [react()],
   server: {
-    port: 3000,
+    port: 3002,
   },
 });

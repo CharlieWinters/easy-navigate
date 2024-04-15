@@ -3,40 +3,40 @@ import {createRoot} from 'react-dom/client';
 
 import '../src/assets/style.css';
 
-async function addSticky() {
-  const stickyNote = await miro.board.createStickyNote({
-    content: 'Hello, World!',
-  });
-
-  await miro.board.viewport.zoomTo(stickyNote);
-}
 
 const App: React.FC = () => {
+  const [isAutoNavigate, setIsAutoNavigate] = React.useState(true);
+
   React.useEffect(() => {
-    addSticky();
+    const getAppData = async () => {
+      const data = await miro.board.getAppData('autoToggle');
+      debugger
+      if (data) {
+        setIsAutoNavigate(data.enabled);
+      }
+    };
+
+    getAppData();
+
   }, []);
+
+  const handleToggle = async () => {
+    await miro.board.setAppData('autoToggle', {enabled: !isAutoNavigate});
+    debugger
+    setIsAutoNavigate(!isAutoNavigate);
+  }
 
   return (
     <div className="grid wrapper">
       <div className="cs1 ce12">
-        <img src="/src/assets/congratulations.png" alt="" />
+        <h1>Toggle autonavigate</h1>
+        <p>Toggle the autonavigate feature on and off.</p>
       </div>
       <div className="cs1 ce12">
-        <h1>Congratulations!</h1>
-        <p>You've just created your first Miro app!</p>
-        <p>
-          To explore more and build your own app, see the Miro Developer
-          Platform documentation.
-        </p>
-      </div>
-      <div className="cs1 ce12">
-        <a
-          className="button button-primary"
-          target="_blank"
-          href="https://developers.miro.com"
-        >
-          Read the documentation
-        </a>
+        <label class="toggle">
+          <input type="checkbox" tabindex="0" onChange={handleToggle} checked={isAutoNavigate}/>
+          <span>Toggle</span>
+        </label>
       </div>
     </div>
   );
