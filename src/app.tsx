@@ -10,7 +10,6 @@ const App: React.FC = () => {
   React.useEffect(() => {
     const getAppData = async () => {
       const data = await miro.board.getAppData('autoToggle');
-      debugger
       if (data) {
         setIsAutoNavigate(data.enabled);
       }
@@ -22,7 +21,6 @@ const App: React.FC = () => {
 
   const handleToggle = async () => {
     await miro.board.setAppData('autoToggle', {enabled: !isAutoNavigate});
-    debugger
     setIsAutoNavigate(!isAutoNavigate);
   }
 

@@ -18,7 +18,6 @@ export async function init() {
       const metadata = await miro.board.getAppData('autoToggle');
 
       if (metadata){
-        debugger
         toggleEnabled = metadata.enabled;
       };
 
